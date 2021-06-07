@@ -26,3 +26,57 @@
 
 // console.log(centerOf('x'));
 
+// function sequence(count, num) {
+//   let result = [];
+//   for (let i = 1; i <= count; i++) {
+//     result.push(i * num);
+//   }
+//   return result;
+// }
+
+
+// console.log(sequence(0, 33));
+
+
+// function reverseSentence(str) {
+//   console.log(str.split(' ').reverse().join(' '));
+// }
+
+// reverseSentence('');
+
+// function reverseWords(str) {
+//   let strArr = str.split(' ')
+//   let resultArr = []
+//   for (let i = 0; i < strArr.length; i++) {
+//     if (strArr[i].length >= 5) {
+//       resultArr.push(strArr[i].split('').reverse().join(''));
+//     } else {
+//       resultArr.push(strArr[i]);
+//     }
+//   }
+//   return resultArr.join(' ');
+// }
+
+// console.log(reverseWords('Walk around the block'));
+
+// function isBalanced(str) {
+//   let parArr = str.match(/[()]/g);
+//   let expectRight = 0;
+//   for (let i = 0; i < parArr.length; i++) {
+//     if (expectRight < 0) {
+//       return false;
+//     }
+//     if (parArr[i] === '(') {
+//       expectRight += 1;
+//     } else {
+//       expectRight -= 1;
+//     }
+//   }
+//   if (expectRight !== 0) {
+//     return false;
+//   } else {
+//     return true;
+//   }
+// }
+
+// console.log(isBalanced("What ((is))) up("));
