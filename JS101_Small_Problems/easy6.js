@@ -71,7 +71,7 @@
 //     } else {
 //       expectRight -= 1;
 //     }
-//   }
+//   } 
 //   if (expectRight !== 0) {
 //     return false;
 //   } else {
@@ -80,3 +80,5 @@
 // }
 
 // console.log(isBalanced("What ((is))) up("));
+
+
