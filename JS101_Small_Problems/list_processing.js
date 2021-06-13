@@ -51,3 +51,15 @@
 // }
 
 // console.log(leadingSubstrings("xyzzy"));
+
+// function substrings(str) {
+//   let resultArr = [];
+//   for (let i = 0; i < str.length; i++) {
+//     for (let j = i; j < str.length; j++) {
+//       resultArr.push(str.slice(i, j + 1));
+//     }
+//   }
+//   return resultArr;
+// }
+
+// console.log(substrings("abcde"));
