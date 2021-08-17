@@ -1,6 +1,7 @@
 let readline = require("readline-sync");
-let DECK = createDeck();
-let SUIT_NAME = { H: "Hearts", D: "Diamonds", S: "Spades", C: "Clubs" };
+const SUIT_NAME = { H: "Hearts", D: "Diamonds", S: "Spades", C: "Clubs" };
+const FACE_CARDS = ["J", "Q", "K", "A"];
+const MAX_WINS = 5;
 
 function prompt(str) {
   console.log(`=> ${str}`);
@@ -11,6 +12,7 @@ function shuffle(array) {
     let otherIndex = Math.floor(Math.random() * (index + 1)); // 0 to index
     [array[index], array[otherIndex]] = [array[otherIndex], array[index]]; // swap elements
   }
+  return array;
 }
 
 function createDeck() {
@@ -21,10 +23,10 @@ function createDeck() {
     cardNum.push(i);
   }
   // add JQKA
-  cardNum = cardNum.concat(["J", "Q", "K", "A"]);
+  cardNum = cardNum.concat(FACE_CARDS);
   // create the full Deck
   cardNum.forEach((n) => {
-    for (const suit of ["H", "D", "S", "C"]) {
+    for (const suit of Object.keys(SUIT_NAME)) {
       deck.push([suit, n]);
     }
   });
@@ -35,21 +37,22 @@ function displayCardReceived(turn, card) {
   prompt(`${turn} just got a ${card[1]} of ${SUIT_NAME[card[0]]}`);
 }
 
-function dealCards(turn, gameData) {
-  if (turn === "init") {
+function dealOneCard(turn, gameData) {
+  if (turn === "player") {
     gameData.playerDeck.push(gameData.deck.pop());
-
-    gameData.dealerDeck.push(gameData.deck.pop());
-
-    gameData.playerDeck.push(gameData.deck.pop());
-
-    gameData.dealerDeck.push(gameData.deck.pop());
-  } else if (turn === "player") {
-    gameData.playerDeck.push(gameData.deck.pop());
-    displayCardReceived("You", gameData.playerDeck.slice(-1)[0]);
   } else if (turn === "dealer") {
     gameData.dealerDeck.push(gameData.deck.pop());
-    displayCardReceived("Dealer", gameData.dealerDeck.slice(-1)[0]);
+  }
+}
+
+function dealCards(turn, gameData) {
+  if (turn === "init") {
+    dealOneCard("player", gameData);
+    dealOneCard("player", gameData);
+    dealOneCard("dealer", gameData);
+    dealOneCard("dealer", gameData);
+  } else {
+    dealOneCard(turn, gameData);
   }
 }
 
@@ -103,6 +106,7 @@ function playerTurn(gameData) {
       break;
     } else {
       dealCards("player", gameData);
+      displayCardReceived("You", gameData.playerDeck.slice(-1)[0]);
       let playerScore = calculateScore(gameData.playerDeck);
       // check if player busted
       if (playerScore > 21) {
@@ -139,6 +143,11 @@ function playAgain() {
   return answer === "y";
 }
 
+function startGame() {
+  prompt("Do start the game?");
+  readline.question();
+}
+
 function dealerTurn(gameData) {
   while (true) {
     displayDeck("dealer", gameData);
@@ -146,6 +155,7 @@ function dealerTurn(gameData) {
       // if score is lower than 17 keep hitting
       prompt("Dealer chose to hit!");
       dealCards("dealer", gameData);
+      displayCardReceived("Dealer", gameData.dealerDeck.slice(-1)[0]);
       let dealerScore = calculateScore(gameData.dealerDeck);
       // check if dealer is busted
       if (dealerScore > 21) {
@@ -185,9 +195,9 @@ function updateMatchScore(matchScore, gameData) {
 }
 
 function matchWinner(matchScore) {
-  if (matchScore.player >= 5) {
+  if (matchScore.player >= MAX_WINS) {
     return "player";
-  } else if (matchScore.dealer >= 5) {
+  } else if (matchScore.dealer >= MAX_WINS) {
     return "dealer";
   }
 }
@@ -214,14 +224,15 @@ while (true) {
     "Welcome to the game twenty one. First one to win five games wins the match!"
   );
   // game loop
-  while (true) {
+  while (!matchWinner(matchScore)) {
+    console.clear();
     prompt("Starting a new game...");
     // initializing Game Data
     let gameData = {
       playerDeck: [],
       dealerDeck: [],
       winner: undefined,
-      deck: DECK.slice(),
+      deck: shuffle(createDeck()),
       playerRoundDone: false,
     };
     // shuffle deck
@@ -229,11 +240,8 @@ while (true) {
     // set up cards
     dealCards("init", gameData);
     // play round loop
-    while (true) {
+    while (!gameData.winner) {
       playRounds(gameData);
-      if (gameData.winner) {
-        break;
-      }
     }
     // if no one busted compare score
     if (gameData.winner == "compare") {
@@ -246,16 +254,14 @@ while (true) {
 
     displayMatchScore(matchScore);
 
-    // check if there's a winner for match
-    if (matchWinner(matchScore)) {
-      break;
-    }
+    startGame();
   }
 
   displayMatchWinner(matchScore);
 
   // ask to see if play again.
   if (!playAgain()) {
+    prompt("Thanks for playing the game!");
     break;
   }
 }
