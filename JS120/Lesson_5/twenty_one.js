@@ -209,6 +209,31 @@ class TwentyOneGame {
 
   start() {
     this.displayWelcomeMessage();
+    while (true) {
+      this.oneRound();
+      if (!this.playAgain()) break;
+    }
+    this.displayGoodbyeMessage();
+  }
+  playAgain() {
+    let answer;
+    while (true) {
+      answer = readline
+        .question("Do you want to play again (y/n)? ")
+        .toLowerCase();
+
+      if (["y", "n"].includes(answer)) break;
+
+      console.log(
+        "Sorry, that's not a valid choice. Please input only 'y' or 'n'"
+      );
+      console.log("");
+    }
+    if (answer === "y") {
+      return true;
+    } else return false;
+  }
+  oneRound() {
     this.dealCards();
     this.showCards();
     this.playerTurn();
@@ -216,7 +241,6 @@ class TwentyOneGame {
       this.dealerTurn();
     }
     this.displayResult();
-    this.displayGoodbyeMessage();
   }
 
   dealCards() {
@@ -231,11 +255,18 @@ class TwentyOneGame {
   }
 
   showCards() {
+    this.showPlayerCards();
+    this.showDealerCards();
+    console.log("");
+  }
+  showPlayerCards() {
     console.log(
       `${
         this.player.name
       } got ${this.player.cards[0].toString()} and ${this.player.cards[1].toString()}.`
     );
+  }
+  showDealerCards() {
     console.log(
       `${
         this.dealer.name
@@ -246,6 +277,7 @@ class TwentyOneGame {
     if (principle.name === this.dealer.name) {
       this.dealer.showHand();
     }
+
     while (true) {
       principle.makeHitDecision();
       principle.showDecision();
@@ -253,10 +285,14 @@ class TwentyOneGame {
       this.dealCard(principle);
       principle.showLastCard();
       principle.showHand();
+      principle.showScore();
       if (principle.isBusted()) {
         this.winner = principle.name;
         principle.showBusted();
         break;
+      }
+      if (principle.name === this.player.name) {
+        this.showDealerCards();
       }
     }
   }
