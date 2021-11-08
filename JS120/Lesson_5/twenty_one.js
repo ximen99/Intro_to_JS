@@ -66,7 +66,6 @@ class Card {
 }
 
 class Deck {
-  static VALUES = [2, 3, 4, 5, 6, 7, 8, 9, 10, "Jack", "Queen", "King", "Ace"];
   static NUMBERS = [2, 3, 4, 5, 6, 7, 8, 9, 10];
   static FACE = ["Jack", "Queen", "King"];
   static ACE = "Ace";
@@ -112,7 +111,9 @@ class Participant {
       console.log(`${this.name} have ${cardsJoin}.\n`);
     }
   }
-
+  resetHand() {
+    this.card = [];
+  }
   showScore() {
     console.log(`${this.name} total score is ${this.calcScore()}.`);
   }
@@ -234,6 +235,8 @@ class TwentyOneGame {
     } else return false;
   }
   oneRound() {
+    this.player.resetHand();
+    this.dealer.resetHand();
     this.dealCards();
     this.showCards();
     this.playerTurn();
