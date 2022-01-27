@@ -128,7 +128,6 @@ app.get("/lists/:todoListId", (req, res, next) => {
 const loadTodo = (todoListId, todoId, todoLists) => {
   let todoList = loadTodoList(todoListId, todoLists);
   if (!todoList) return undefined;
-
   return todoList.todos.find((todo) => todo.id === todoId);
 };
 
@@ -170,7 +169,7 @@ app.post("/lists/:todoListId/todos/:todoId/destroy", (req, res, next) => {
   }
 });
 
-// Delete a todo
+// mark all todo complete
 app.post("/lists/:todoListId/complete_all", (req, res, next) => {
   let todoListId = req.params.todoListId;
   let todoList = loadTodoList(+todoListId, req.session.todoLists);
