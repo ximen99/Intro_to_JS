@@ -1,5 +1,5 @@
 const { Client } = require("pg");
-let client = new Client({ database: "films" });
+let client = new Client({ database: "expenses" });
 
 async function logQuery(queryText) {
   await client.connect();
