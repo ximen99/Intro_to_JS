@@ -23,7 +23,9 @@ nav {
   text-transform: uppercase;
 }
 
-nav ul { padding: 0; }
+nav ul {
+  padding: 0;
+}
 
 nav li {
   display: inline;
@@ -50,7 +52,7 @@ h1 a {
   height: 243px;
   margin: 0 auto 50px auto;
   text-indent: -9000px;
-  background: transparent url("images/logo.png") 0 0 no-repeat
+  background: transparent url("images/logo.png") 0 0 no-repeat;
 }
 
 h2 {
@@ -107,9 +109,15 @@ footer li a {
   overflow: hidden;
   background: transparent url("images/icons_social-media.png") 0 0 no-repeat;
 }
-footer li a.facebook { background-position: 0 -46px; }
-footer li a.email { background-position: 0 -92px; }
-footer li a.instagram { background-position: 0 -138px; }
+footer li a.facebook {
+  background-position: 0 -46px;
+}
+footer li a.email {
+  background-position: 0 -92px;
+}
+footer li a.instagram {
+  background-position: 0 -138px;
+}
 
 #projects article {
   padding: 0 0 50px 0;
@@ -143,7 +151,9 @@ footer li a.instagram { background-position: 0 -138px; }
   padding: 0 110px 100px 110px;
 }
 
-#team ul { padding: 0; }
+#team ul {
+  padding: 0;
+}
 
 #team li {
   display: inline-block;
@@ -154,6 +164,72 @@ footer li a.instagram { background-position: 0 -138px; }
 #team li img {
   display: block;
   margin: 0 0 20px 0;
+}
+
+#modal-layer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+#modal {
+  position: absolute;
+  left: 50%;
+  z-index: 3;
+  width: 660px;
+  padding: 125px 70px 90px 85px;
+  margin: 0 0 0 -415px;
+  text-align: left;
+  background: #ffffff;
+  -webkit-transition: visibility 0.3s, opacity 0.3s;
+  -moz-transition: visibility 0.3s, opacity 0.3s;
+  transition: visibility 0.3s, opacity 0.3s;
+}
+
+.hide {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.show {
+  visibility: visible;
+  opacity: 1;
+}
+
+#modal a.close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1;
+  width: 30px;
+  height: 30px;
+  text-align: left;
+  text-indent: -8685px;
+  overflow: hidden;
+  background: transparent url("../images/icon_close.png") 0 0 no-repeat;
+}
+
+#modal h3 {
+  display: inline-block;
+  font-size: 24px;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+#modal img {
+  display: inline-block;
+  width: 96px;
+  margin: 0 30px 0 0;
+  vertical-align: middle;
+}
+
+#modal p {
+  padding: 0;
+  font-size: 20px;
 }
 
 @media (max-width: 875px) {
@@ -230,14 +306,18 @@ footer li a.instagram { background-position: 0 -138px; }
     background-size: 90px auto;
   }
 
-  h2 { font-size: 26px; }
+  h2 {
+    font-size: 26px;
+  }
 
   h2:before,
   h2:after {
     vertical-align: 0;
   }
 
-  h3 { font-size: 22px; }
+  h3 {
+    font-size: 22px;
+  }
 
   nav {
     font-size: 16px;
